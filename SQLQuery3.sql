@@ -10,6 +10,6 @@ ClientId int not null foreign key references Client(Id)
 create table SubscriberNumber(
 Id int primary key identity(1,1),
 Name varchar(255) not null unique,
-RegistrationDate date,
+RegistrationDate date not null,
 SubscriberId int not null foreign key references Client(Id) 
 );
