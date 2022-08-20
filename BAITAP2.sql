@@ -47,7 +47,7 @@ INSERT INTO Product VALUES
 	SELECT * FROM Product
 --c) Liệt kê danh sách người chịu trách nhiệm của công ty.
 	SELECT * FROM Manager_Product
-/*5. Viết các câu lệnh truy vấn để lấy*/
+/*5.*/
 --a) Liệt kê danh sách loại sản phẩm của công ty theo thứ tự tăng dần của tên
 	SELECT * FROM Type_Product ORDER BY Name asc
 --b) Liệt kê danh sách người chịu trách nhiệm của công ty theo thứ tự tăng dần của tên.
@@ -56,7 +56,7 @@ INSERT INTO Product VALUES
 	SELECT * FROM Product where Product.Mlsp_TP = 'Z37E'
 --d) Liệt kê các sản phẩm Nguyễn Văn An chịu trách nhiệm theo thứ tự giảm đần của mã.
 	SELECT * FROM Product where Product.Manager_ID in (select Id from Manager_Product where Name =N'Nguyễn Văn A')
-/*6. Viết các câu lệnh truy vấn để*/
+/*6.*/
 --a) Số lượng sản phẩm của từng loại sản phẩm.
 	SELECT COUNT(*) AS SL_SanPham,Mlsp_TP FROM  Product GROUP BY Product.Mlsp_TP
 --b) Số lượng sản phẩm trung bình theo loại sản phẩm.
@@ -65,7 +65,7 @@ INSERT INTO Product VALUES
 	SELECT * FROM Product JOIN Type_Product ON Product.Mlsp_TP= Type_Product.Mlsp
 --d) Hiển thị toàn bộ thông tin về người chịu trách nhiêm, loại sản phẩm và sản phẩm
 	SELECT * FROM Manager_Product JOIN Product ON Manager_ID=Manager_Product.Id JOIN Type_Product ON Mlsp=Mlsp_TP
-/*7. Thay đổi những thư sau từ cơ sở dữ liệu*/
+/*7.*/
 --a) Viết câu lệnh để thay đổi trường ngày sản xuất là trước hoặc bằng ngày hiện tại.
 	ALTER TABLE Product ADD constraint CHECKDate CHECK (Product.PF_Date >= GETDATE()) ;
 	--ALTER TABLE Product DROP constraint CHECKDate 
@@ -78,7 +78,7 @@ INSERT INTO Product VALUES
 --c) Viết câu lệnh để thêm trường phiên bản của sản phẩm.
 	ALTER TABLE Product
 	ADD Version nvarchar(50) default N'A123'
-/*8. Thực hiện các yêu cầu sau*/
+/*8.*/
 --a) Đặt chỉ mục (index) cho cột tên người chịu trách nhiệm
 	CREATE INDEX MNG_NAME ON Manager_Product (Name);
 /*b) Viết các View sau:*/
