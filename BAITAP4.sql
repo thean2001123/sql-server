@@ -1,4 +1,4 @@
-﻿create database BookStore 
+
 create table quanly(
 id int identity(1,1) not null primary key,
 tenlogic  nvarchar(100) not null, 
@@ -8,7 +8,7 @@ dungluongtoida varchar(100) not null,
 );
 
 
-create database ass3
+
 
 create table nxb(
 id int identity(1,1) not null primary key,
