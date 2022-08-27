@@ -41,22 +41,27 @@ insert into sodienthoai(dienthoai, id_danhba) values
 
 
 --4
+a Liệt kê danh sách những người trong danh bạ
 select hoten from danhba
+b Liệt kê danh sách số điện thoại có trong danh bạ
 select dienthoai from sodienthoai
 
 -- 5 
-
+a Liệt kê danh sách người trong danh bạ theo thứ thự alphabet
 select hoten from danhba order by hoten asc
+c Liệt kê những người có ngày sinh là 12/12/09
 
 select * from danhba where ngaysinh = '12/12/09'
+b Liệt kê các số điện thoại của người có thên là Nguyễn Văn An
 select s.dienthoai from sodienthoai s join danhba db on s.id_danhba = db.id where  db.id = ( select id from danhba where hoten like N'Nguyễn Văn An')
 
 --6
+a Tìm số lượng số điện thoại của mỗi người trong danh bạ
 select db.hoten, count(std.dienthoai) as N'số lượng số' from danhba db left join sodienthoai std on  std.id_danhba = db.id  group by  db.hoten
-
+b Tìm tổng số người trong danh bạ sinh vào thang 12
 select count(*) as N'số người sinh tháng 12' from danhba db where db.ngaysinh like '12/%'
 
---6
+--6 c Hiển thị toàn bộ thông tin về người, của từng số điện thoại
 select db.hoten, std.dienthoai as N'số dt' from danhba db left join sodienthoai std on  std.id_danhba = db.id 
---6
+--6 d Hiển thị toàn bộ thông tin về người, của số điện thoại 123456789
 select db.hoten, db.diachi, db.ngaysinh, std.dienthoai from danhba db left join sodienthoai std on  std.id_danhba = db.id where std.dienthoai = '9876545321'
