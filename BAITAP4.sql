@@ -111,59 +111,61 @@ insert into sach(masach ,tensach, tacgia, tomtat, namxb, lanxb, nhaxb, diachi, g
 2010, 9, 6,N'53 Nguyễn Du, Hai Bà Trưng, Hà Nội', 1820000, 10, 1)
 
 --2 
-
+-- Liệt kê các cuốn sách có năm xuất bản từ 2008 đến nay
 select tensach from sach where namxb >2010
-
+-- Liệt kê 10 cuốn sách có giá bán cao nhất
 select top(10) masach, tensach, giaban from sach order by giaban desc
-
+-- Tìm những cuốn sách có tiêu đề chứa từ “tin học”
 select * from sach where tensach like N'%tin học%'
-
+-- Liệt kê các cuốn sách có tên bắt đầu với chữ “T” theo thứ tự giá giảm dần
 select * from sach where tensach like 'T%' order by giaban desc
-
+-- Liệt kê các cuốn sách của nhà xuất bản Tri thức
 select s.masach ,s.tensach, s.tacgia, s.tomtat, s.namxb, s.lanxb, nxb.nhaxuatban, s.diachi, s.giaban, s.soluong, ls.theloai 
 from sach s join nxb on s.nhaxb = nxb.id join loaisach ls on ls.id = s.theloai where nhaxb in 
 (select id from nxb where nhaxuatban = N'Tri thức')
-
+-- Lấy thông tin chi tiết về nhà xuất bản xuất bản cuốn sách “Trí tuệ Do Thái”
 
 select * from nxb where id in (select nhaxb from sach where tensach = N'Trí tuệ do thái')
-
+-- Hiển thị các thông tin sau về các cuốn sách: Mã sách, Tên sách, Năm xuất bản, Nhà xuất bản,
+Loại sách 
 select s.masach ,s.tensach, s.tacgia, s.tomtat, s.namxb, s.lanxb, nxb.nhaxuatban, s.diachi, s.giaban, s.soluong, ls.theloai 
 from sach s join nxb on s.nhaxb = nxb.id join loaisach ls on ls.id = s.theloai 
-
+-- Tìm cuốn sách có giá bán đắt nhất
 select top(1) s.masach ,s.tensach, s.tacgia, s.tomtat, s.namxb, s.lanxb, nxb.nhaxuatban, s.diachi, s.giaban, s.soluong, ls.theloai 
 from sach s join nxb on s.nhaxb = nxb.id join loaisach ls on ls.id = s.theloai  order by giaban desc
 
 
 
--- 
+-- . Tìm cuốn sách có số lượng lớn nhất trong kho
 select  s.masach ,s.tensach, s.tacgia, s.tomtat, s.namxb, s.lanxb, nxb.nhaxuatban, s.diachi, s.giaban, s.soluong, ls.theloai 
 from sach s join nxb on s.nhaxb = nxb.id join loaisach ls on ls.id = s.theloai  where soluong in (select max(soluong) from sach)
-
+-- 
 select top(1) s.masach ,s.tensach, s.tacgia, s.tomtat, s.namxb, s.lanxb, nxb.nhaxuatban, s.diachi, s.giaban, s.soluong, ls.theloai 
 from sach s join nxb on s.nhaxb = nxb.id join loaisach ls on ls.id = s.theloai  order by soluong desc
 
---13
+-- Giảm giá bán 10% các cuốn sách xuất bản từ năm 2008 trở về trước
 select tensach, giaban from sach WHERE namxb < 2008;
-
+-- 
 UPDATE sach
 SET giaban = giaban - giaban * 0.1
 WHERE namxb < 2008;
 
 select tensach, giaban from sach WHERE namxb < 2008;
 
------
+----- Tìm các cuốn sách của tác giả “Eran Katz”
 select tensach from sach where tacgia = N'Eran Katz'
-
+-- Thống kê số đầu sách của mỗi nhà xuất bản 
 select nxb.nhaxuatban, count(s.nhaxb) as N'Số lượng' from sach s join nxb on s.nhaxb = nxb.id group by s.nhaxb, nxb.nhaxuatban
 
-
+-- Thống kê số đầu sách của mỗi loại sách 
 select ls.theloai, count(s.nhaxb) as N'Số lượng' from sach s join loaisach ls on s.theloai = ls.id group by s.theloai, ls.theloai
 
+-- Đặt chỉ mục (Index) cho trường tên sách
 
 CREATE INDEX index_tensach
 ON sach (tensach);
 
-
+-- Viết view lấy thông tin gồm: Mã sách, tên sách, tác giả, nhà xb và giá bán
 CREATE VIEW ViewSach AS
 SELECT masach, tensach, tacgia,nhaxb, giaban 
 FROM sach
